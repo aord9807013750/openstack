@@ -1,0 +1,18 @@
+sudo useradd -s /bin/bash -d /opt/stack -m stack
+apt-get install sudo -y 
+echo "stack ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+sudo su stack && cd ~
+sudo apt-get install git -y 
+git clone https://opendev.org/openstack/devstack
+cd devstack
+cat >> devstack/samples/local.conf <<EOF
+[[local|localrc]]
+FLOATING_RANGE=10.214.10.0/24
+FIXED_RANGE=10.11.12.0/24
+ADMIN_PASSWORD=openstack
+DATABASE_PASSWORD=openstack
+RABBIT_PASSWORD=openstack
+SERVICE_PASSWORD=openstack
+EOF
+
+ 
